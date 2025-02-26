@@ -2,7 +2,7 @@
 %p.s. in case it's not already evident from the preamble, I'm not a professional LaTeX user, so I'm sure there are better ways to do things. I'm just trying to make it work.
 
 %------------------------------------------------------------------------------
-%           LAST UPDATE: 30-01-2025
+%           LAST UPDATE: 26-02-2025
 %------------------------------------------------------------------------------
 
 %I don't own copyright on anything, I just literally copied and pasted together a bunch of stuff.
@@ -41,6 +41,22 @@
 
 \usepackage{titlepic}
 \usepackage{pdfpages}
+
+%------------------------------------------------------------------------------
+%           Plots \& Graphs
+%------------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepgfplotslibrary{fillbetween}
+
+%------------------------------------------------------------------------------
+%           To fix the bullshit in VSCode
+%------------------------------------------------------------------------------
+
+\newcommand{\E}{\(\mathbf{E}\)}
+\newcommand{\Var}{\text{Var}}
 
 %------------------------------------------------------------------------------
 %           Geometry

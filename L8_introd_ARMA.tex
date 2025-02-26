@@ -1,0 +1,257 @@
+\section{Quick overview of ARMA models}
+
+    Classic models presented in a conurs in time series analysis deal with \textbf{stationary processes}.
+
+    Autoregressive and 
+
+    \subsection{For Stationary Time Series}
+
+        \[
+        (T_t)_{t \geq 1} \text{ is stationary} 
+        \]
+
+        Stationarity is defined and characterized by:
+        
+            \begin{itemize}
+                \item \textbf{Mean} $\mu(t) = \E(T_t) = \mu $
+                \item \textbf{Variance} $\sigma(t) = \Var(T_t) =  \sigma^2$
+                \item \textbf{Autocovariance} $\gamma(t, t+h) = Cov(Y_t, Y_{t+h}) = \tilde{\gamma}(h)$
+                \item \textbf{Autocorrelation} $\rho(t, t+h) = \frac{\gamma(t, t+h)}{\sigma(t)\sigma(t+h)} = \tilde{\rho}(h)$
+            \end{itemize}
+
+        Both autocovariance and autocorrelation are functions of the lag $h$.
+
+        If the series \((Y_t)_{t \geq 1}\) is stationary, then the mean, variance, autocovariance and autocorrelation are constant over time and they can be calculated. In fact, we can see that:
+            
+            \begin{itemize}
+                \item Sample mean: \(\hat{\mu} = \frac{\sum_{t=}^{T} Y_t}{T} = \bar{Y}\)
+                \item Sample variance: \(\hat{\sigma}^2 = \frac{\sum_{t=1}^{T} (Y_t - \bar{Y})^2}{T-1}\)\footnote{By dividing by $T-1$ instead of $T$, we actually get the "corrected" sample variance.}
+                \item Sample autocovariance at lag \(h\): \(\hat{\gamma}(h) = \frac{\sum_{t=1}^{T-h} (Y_t - \bar{Y})(Y_{t+h} - \bar{Y})}{T-h}\)
+                \item Sample autocorrelation at lag \(h\): \(\hat{\rho}(h) = \frac{\hat{Cov}(Y_t, Y_{t+h})}{\sqrt{\hat{Var}(Y_t)\hat{Var}(Y_{t+h})}} = \frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\)
+            \end{itemize}
+
+        Plot the estimated \textbf{autocorrelogram} to see if the series is stationary.
+
+        \begin{figure}
+            \begin{tikzpicture}
+                \draw[->] (0,0) -- (10,0) node[right] {$h$};
+                \draw[->] (0,0) -- (0,5) node[above] {$\hat{\rho}(h)$};
+                \draw[scale=1,domain=0:10,smooth,variable=\x,blue] plot ({\x},{4*exp(-\x/2)});
+            \end{tikzpicture}
+        \end{figure}
+
+        The estimated autocorrelation function should be approximately close to the autocorrelation sample for large sample size.
+
+        \begin{proposition}
+            Informally speaking, one can expect that:
+
+            Correlogram \(\approx\) True autocorrelation function
+        \end{proposition}
+
+    \subsection{For Non-Stationary Time Series}
+
+        In this case, we cannot use the same properties as the moments we used before now depend on time (i.e.\(\mu(t) = E(Y_t) = \mu_t\)).
+
+        \subsubsection{Replicates}
+
+            In some applications (e.g. a financial market with multiple assets prices as time series) we have "replicates" (a random sample) of time series.
+            
+            INSERISCI GRAFICO
+
+            And we can use
+
+            \begin{equation}
+                \bar{Y}_t = \frac{\sum_{i=1}^{n}Y_{i,t}}{n}
+            \end{equation}
+
+            to estimate the mean of the time series \( \mu_t = E(Y_t) \).
+
+            However, in many applications we do not have access to replicates.
+
+            As we will see, these models introduce a temporal dependence for the \(\mu_t\), \(\sigma_t\) and \(\gamma_t\), so that observations at times different from \(t\) can still give "indirect" information on \(mu_t\), and can thus be used for estimating it.
+
+\section{ARMA(p,q) Models for Stationary Time Series}
+
+    INSERT THE GRAPH OF THE REALISATION OF A TIME SERIES.
+
+    Suppose we have time series data that can be modeled as the realisation of a stationary time series \((Y_t)_{t \geq 1}\).
+
+    \textit{But what model should we use?} \textbf{ARMA(p,q)} models are a good starting point. One of the reasons why they are attractive is because the order \(p,q\) can be estimated from the data, and it can then be understood from the ACF.
+
+    \subsection{AR(1) autoregressive process of order 1}
+
+        An AR(1) is presented as the (stationary and causal) solution of a finite difference stochastic equation, with \(t \in (-\infty, +\infty)\):
+
+        \begin{equation}
+            Y_t = \alpha T_{t-1} + \varepsilon_t 
+        \end{equation}
+
+        where \(\varepsilon_t\) is a white noise process with mean 0 and variance \(\sigma^2\), i.e. \(\varepsilon_t \sim N(0, \sigma^2)\).
+
+        A solution of the equation is a proces \(Y_t\) that satisfies the equation for all \(t\). In general, the solution is not unique, but we can impose some conditions to make it unique.
+        Namely, if we restrict to stationary solutions, then either there exist no solutions or there exists a unique solution, depending on the value of \(\alpha\).
+
+        \begin{example}[\(\alpha =1\)]
+            To define the AR(1) process, we need to specify:
+            \[
+            \alpha = 1, \quad Y_t = T_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma^2)
+            \]
+            In this case, the model just specified is a random walk, and does not hence admit a stationary solution.
+        \end{example}
+
+        \begin{example}[\(|\alpha| < 1\)]
+            If instead we consider a model specified as:
+            \[
+            \alpha \in (-1, 1), \quad Y_t = \alpha Y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma^2)
+            \]
+            then the model admits a stationary solution, and it is:
+            \[
+            Y_t = \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j} \quad \text{which is an MA}(\infty) \text{ process}
+            \]
+        \end{example}
+
+        \begin{remark}
+            Please note that the above solution is finite if and only if the series converges, which is only possible if \(\alpha \in (-1, 1)\).
+        \end{remark}
+
+        GUARDA NOTE SUL GRUPPO: Lemma 1.29 AR(p)
+
+        Let the absolute value of \(\alpha\) be strictly less than 1, then there exists a stationary solution given by \( Y_t = \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j} \).
+
+        \begin{equation}
+            \forall \alpha \in (-1,1) \quad  \exists ! Y_t = \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}
+        \end{equation}
+
+
+
+        Let us check that this solution is stationary:
+
+        \begin{itemize}
+            \item \textbf{Mean}: 
+            \[
+            \mu(t) = \E(Y_t) = \E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) = \sum_{j=0}^{\infty} \alpha^j \E(\varepsilon_{t-j}) = 0
+            \]
+            \item \textbf{Variance}:
+            \[
+            \sigma^2(t) = \Var(Y_t) = \Var\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) = \sum_{j=0}^{\infty} \alpha^{2j} \Var(\varepsilon_{t-j}) = \sigma^2 \sum_{j=0}^{\infty} \alpha^{2j} = \frac{\sigma^2}{1-\alpha^2} = \sigma^2 \cdot \frac{1}{1-\alpha^2} = \sigma^2_Y
+            \]
+            \item \textbf{Autocovariance}:
+            \[
+            \gamma(t, t+h) = \Cov(Y_t, Y_{t+h}) = E(Y_t, Y_{t+h}) - \underbrace{E(Y_t)}_{0} \overbrace{E(Y_{t+h})}^{0} = \E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}, \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t+h-j}\right) = E(\alpha^0 \varepsilon_t + \alpha^1 \varepsilon_{t-1} + \ldots, \alpha^h \varepsilon_{t} + \alpha^{h+1} \varepsilon_{t-1} + \ldots) = \alpha^h \frac{\sigma^2}{1-\alpha^2} = \alpha^h \sigma^2_Y
+            \]
+        \end{itemize}
+
+        Given that all the moments are constant over time (the result on the right do not depend on \(t\)), we can say that the solution is stationary.
+
+        \begin{example}[Do it yourself!]
+            Plot the \textit{acf} of an AR(1) process with:
+            \begin{enumerate}
+                \item \(\alpha = 0.8\)
+                \item \(\alpha = -0.8\)
+                \item \(\alpha = 2\)
+                \item \(\alpha = 0.2\)
+            \end{enumerate}
+        \end{example}
+
+            The \textit{acf} is \(\rho(g) = \frac{\gamma(h)}{\gamma(0)} = \frac{\alpha^h \cdot \sigma^2_Y}{\sigma^2_Y} = \alpha^h\).
+            Thus, the functions can be plotted as
+
+            \begin{tikzpicture}
+                \begin{axis}[
+                    title={Autocorrelation},
+                    xlabel={Lag},
+                    ylabel={ACF},
+                    xmin=-0.5, xmax=40.5,  % adjust as needed
+                    ymin=-1,    ymax=1,    % adjust as needed
+                    grid=major,
+                    width=12cm, height=6cm,
+                ]
+                
+                % ------------------------------------------------------------------
+                % 1) Confidence band (replace 0.2 with the actual +/- CI you need):
+                % ------------------------------------------------------------------
+                \addplot [name path=upper, draw=none] coordinates {(0, 0.2) (40, 0.2)};
+                \addplot [name path=lower, draw=none] coordinates {(0, -0.2) (40, -0.2)};
+                
+                \addplot [blue!20] fill between[of=upper and lower];
+                
+                % ------------------------------------------------------------------
+                % 2) Horizontal zero line:
+                % ------------------------------------------------------------------
+                \addplot [domain=-0.5:40.5, color=black, thick] {0};
+                
+                % ------------------------------------------------------------------
+                % 3) Autocorrelation spikes (dummy data):
+                %    Replace with your real ACF data, either inline or via \addplot table{...}
+                % ------------------------------------------------------------------
+                \addplot [
+                    ycomb,
+                    mark=*,
+                    color=blue,
+                ] coordinates {
+                    (0, 1.0)
+                    (1, 0.8)
+                    (2, 0.64)
+                    (3, 0.512)
+                    (4, 0.4096)
+                    (5, 0.32768)
+                    (6, 0.262144)
+                    (7, 0.2097152)
+                    (8, 0.16777216)
+                    (9, 0.134217728)
+                    (10, 0.1073741824)
+                    (11, 0.08589934592)
+                    (12, 0.068719476736)
+                    % ... up to (40, someValue)
+                };
+                
+                \end{axis}
+                \end{tikzpicture}
+
+            Oftentimes, it is not sufficient to look at the autocorrelation function: we need to look at the \textit{partial autocorrelation function}.
+
+        \subsubsection{Partial Autocorrelation Function}
+
+            \begin{definition}[Partial Autocorrelation Function]
+                For gaussian processes (and ARMA models are indeed Gaussian):
+                \begin{equation}
+                    \phi:h \mapsto \phi(h) = Corr(Y_t, Y_{t+h} | Y_{t+1}, \ldots, Y_{t+h-1})
+                \end{equation}
+            \end{definition}
+
+            \begin{example}
+                For an autoregressive process of order 1, AR(1), we have:
+                \begin{align}
+                    \phi(0) &= 1 \\
+                    \phi(1) &= Corr(Y_t, Y_{t-1}) \neq 0 \\
+                    \phi(2) &= Corr(Y_t, Y_{t-2} | Y_{t-1}) = 0 \\
+                    \vdots & \\
+                    \phi(h) &= 0 \quad \forall h > 1
+                \end{align}
+            \end{example}
+
+    \subsection{AR(p) autoregressive process of order p}
+
+        \subsubsection{Partial Autocorrelation Function}
+
+            \begin{definition}[Partial Autocorrelation Function]
+            
+            \end{definition}
+
+    \subsection{MA(q) moving average process of order q}
+
+            \begin{example}
+            
+            \end{example}
+
+\section{ARMA(p,q) Process}
+
+    \subsection{Fitting and ARMA model: the Box-Jenkins approach}
+
+        \subsubsection{Step 0: is this series stationary}
+
+        \subsubsection{Step 1: model specification}
+
+        \subsubsection{Step 2: model estimation}
+
+        \subsubsection{Step 3: model diagnostics}

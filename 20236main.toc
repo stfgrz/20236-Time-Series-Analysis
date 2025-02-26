@@ -1,0 +1,70 @@
+\contentsline {part}{I\hspace {1em}Descriptive techniques and forecasting algorithms}{7}{part.1}%
+\contentsline {chapter}{\numberline {1}Classical time series decomposition}{9}{chapter.1}%
+\contentsline {section}{\numberline {1.1}What is a time series?}{9}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Different Types of Data}{10}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Aims of time series analysis}{10}{subsection.1.1.2}%
+\contentsline {paragraph}{What is a time series?}{10}{Item.5}%
+\contentsline {section}{\numberline {1.2}Exploratory analysis}{11}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Classical time series decomposition}{11}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Additive seasonality and trend}{11}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Fitting a trend}{12}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Fitting a seasonal component}{13}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Fitting trend and seasonal components}{14}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Simple exponential smoothing}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Forecasting algorithms}{15}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Simple exponential smoothing}{15}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Recursive form}{16}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Error correction form}{16}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Choosing \(\alpha \)}{16}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Popular measures of predictive performance}{16}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Extensions}{17}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Forecast function}{17}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Intuition: $y_t$ only shows a "level"}{17}{subsection.2.4.1}%
+\contentsline {subsubsection}{Extension to a trend}{18}{subsection.2.4.1}%
+\contentsline {subsubsection}{Extension to a seasonality}{18}{equation.2.4.13}%
+\contentsline {part}{II\hspace {1em}Probabilistic Models for Time Series Analysis}{19}{part.2}%
+\contentsline {chapter}{\numberline {3}Introd. to Probabilistic Models}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Time series as a stochastic process}{21}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}What is a stochastic process?}{21}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Summaries}{25}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Stationarity}{26}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Random walks}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simple Random Walk}{29}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Markov processes}{33}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Markov chains}{33}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Inference for Markov chains}{35}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Stationary time series: ARMA models I}{37}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Stationary time series: ARMA models II}{39}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Quick overview of ARMA models}{39}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}For Stationary Time Series}{39}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}For Non-Stationary Time Series}{40}{subsection.8.1.2}%
+\contentsline {subsubsection}{Replicates}{40}{subsection.8.1.2}%
+\contentsline {section}{\numberline {8.2}ARMA(p,q) Models for Stationary Time Series}{40}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}AR(1) autoregressive process of order 1}{41}{subsection.8.2.1}%
+\contentsline {subsubsection}{Partial Autocorrelation Function}{42}{Item.25}%
+\contentsline {subsection}{\numberline {8.2.2}AR(p) autoregressive process of order p}{43}{subsection.8.2.2}%
+\contentsline {subsubsection}{Partial Autocorrelation Function}{43}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}MA(q) moving average process of order q}{43}{subsection.8.2.3}%
+\contentsline {section}{\numberline {8.3}ARMA(p,q) Process}{43}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Fitting and ARMA model: the Box-Jenkins approach}{43}{subsection.8.3.1}%
+\contentsline {subsubsection}{Step 0: is this series stationary}{43}{subsection.8.3.1}%
+\contentsline {subsubsection}{Step 1: model specification}{43}{subsection.8.3.1}%
+\contentsline {subsubsection}{Step 2: model estimation}{43}{subsection.8.3.1}%
+\contentsline {subsubsection}{Step 3: model diagnostics}{43}{subsection.8.3.1}%
+\contentsline {part}{III\hspace {1em}Inference for Non-Stationary Time Series}{45}{part.3}%
+\contentsline {chapter}{\numberline {9}Hidden Markov Models (HMMs)}{47}{chapter.9}%
+\contentsline {part}{IV\hspace {1em}State-Space Models (SSMs) for Time Series Analysis}{51}{part.4}%
+\contentsline {chapter}{\numberline {10}State-space models}{53}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Applying SSMs}{55}{chapter.11}%
+\contentsline {chapter}{\numberline {12}Basic notions of Bayesian inference I}{57}{chapter.12}%
+\contentsline {chapter}{\numberline {13}Basic notions of Bayesian inference II}{59}{chapter.13}%
+\contentsline {chapter}{\numberline {14}Kalman filter for DLMs I}{61}{chapter.14}%
+\contentsline {chapter}{\numberline {15}Kalman filter for DLMs II}{63}{chapter.15}%
+\contentsline {chapter}{\numberline {16}Smoothing, forecasting, model checking I}{67}{chapter.16}%
+\contentsline {chapter}{\numberline {17}Smoothing, forecasting, model checking II}{69}{chapter.17}%
+\contentsline {chapter}{\numberline {18}DLMs with unknown parameters: MLE}{71}{chapter.18}%
+\contentsline {chapter}{\numberline {19}Modeling time series with DLMs: examples I}{75}{chapter.19}%
+\contentsline {chapter}{\numberline {20}Modeling time series with DLMs: examples II}{77}{chapter.20}%
+\contentsline {chapter}{\numberline {21}DLMs for spatio-temporal data I}{79}{chapter.21}%
+\contentsline {chapter}{\numberline {22}DLMs for spatio-temporal data II}{81}{chapter.22}%
+\contentsline {chapter}{\numberline {23}Bayesian inference for DLMs}{83}{chapter.23}%
