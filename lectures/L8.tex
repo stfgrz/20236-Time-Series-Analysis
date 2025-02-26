@@ -1,6 +1,6 @@
 \section{Quick overview of ARMA models}
 
-    Classic models presented in a conurs in time series analysis deal with \textbf{stationary processes}.
+    Classic models presented in a course in time series analysis deal with \textbf{stationary processes}.
 
     Autoregressive and 
 
@@ -13,10 +13,10 @@
         Stationarity is defined and characterized by:
         
             \begin{itemize}
-                \item \textbf{Mean} $\mu(t) = \E(T_t) = \mu $
-                \item \textbf{Variance} $\sigma(t) = \Var(T_t) =  \sigma^2$
-                \item \textbf{Autocovariance} $\gamma(t, t+h) = Cov(Y_t, Y_{t+h}) = \tilde{\gamma}(h)$
-                \item \textbf{Autocorrelation} $\rho(t, t+h) = \frac{\gamma(t, t+h)}{\sigma(t)\sigma(t+h)} = \tilde{\rho}(h)$
+                \item \textbf{Mean} \( \mu(t) = E(T_t) = \mu \)
+                \item \textbf{Variance} \(\sigma(t) = \Var(T_t) =  \sigma^2\)
+                \item \textbf{Autocovariance} \( \gamma(t, t+h) = Cov(Y_t, Y_{t+h}) = \tilde{\gamma}(h) \)
+                \item \textbf{Autocorrelation}  \( \rho(t, t+h) = \frac{\gamma(t, t+h)}{\sigma(t)\sigma(t+h)} = \tilde{\rho}(h)\)
             \end{itemize}
 
         Both autocovariance and autocorrelation are functions of the lag $h$.
@@ -70,6 +70,7 @@
 
             As we will see, these models introduce a temporal dependence for the \(\mu_t\), \(\sigma_t\) and \(\gamma_t\), so that observations at times different from \(t\) can still give "indirect" information on \(mu_t\), and can thus be used for estimating it.
 
+\newpage
 \section{ARMA(p,q) Models for Stationary Time Series}
 
     INSERT THE GRAPH OF THE REALISATION OF A TIME SERIES.
@@ -128,17 +129,22 @@
 
         \begin{itemize}
             \item \textbf{Mean}: 
-            \[
-            \mu(t) = \E(Y_t) = \E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) = \sum_{j=0}^{\infty} \alpha^j \E(\varepsilon_{t-j}) = 0
-            \]
+            \begin{equation}
+                \mu(t) = E(Y_t) = E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) = \sum_{j=0}^{\infty} \alpha^j E(\varepsilon_{t-j}) = 0
+            \end{equation}
             \item \textbf{Variance}:
-            \[
-            \sigma^2(t) = \Var(Y_t) = \Var\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) = \sum_{j=0}^{\infty} \alpha^{2j} \Var(\varepsilon_{t-j}) = \sigma^2 \sum_{j=0}^{\infty} \alpha^{2j} = \frac{\sigma^2}{1-\alpha^2} = \sigma^2 \cdot \frac{1}{1-\alpha^2} = \sigma^2_Y
-            \]
+            \begin{equation}
+                \begin{split}
+                    \sigma^2(t) = Var(Y_t) = Var\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}\right) & = \sum_{j=0}^{\infty} \alpha^{2j} Var(\varepsilon_{t-j}) \\ 
+                    & = \sigma^2 \sum_{j=0}^{\infty} \alpha^{2j} = \frac{\sigma^2}{1-\alpha^2} = \sigma^2 \cdot \frac{1}{1-\alpha^2} = \sigma^2_Y
+                \end{split}
+            \end{equation}
             \item \textbf{Autocovariance}:
-            \[
-            \gamma(t, t+h) = \Cov(Y_t, Y_{t+h}) = E(Y_t, Y_{t+h}) - \underbrace{E(Y_t)}_{0} \overbrace{E(Y_{t+h})}^{0} = \E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}, \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t+h-j}\right) = E(\alpha^0 \varepsilon_t + \alpha^1 \varepsilon_{t-1} + \ldots, \alpha^h \varepsilon_{t} + \alpha^{h+1} \varepsilon_{t-1} + \ldots) = \alpha^h \frac{\sigma^2}{1-\alpha^2} = \alpha^h \sigma^2_Y
-            \]
+            \begin{equation}
+                \begin{split}
+                    \gamma(t, t+h) = \text{Cov}(Y_t, Y_{t+h}) & = E(Y_t, Y_{t+h}) - \underbrace{E(Y_t)}_{0} \overbrace{E(Y_{t+h})}^{0} = E\left(\sum_{j=0}^{\infty} \alpha^j \varepsilon_{t-j}, \sum_{j=0}^{\infty} \alpha^j \varepsilon_{t+h-j}\right) \\& = E(\alpha^0 \varepsilon_t + \alpha^1 \varepsilon_{t-1} + \ldots, \alpha^h \varepsilon_{t} + \alpha^{h+1} \varepsilon_{t-1} + \ldots) \\ & = \alpha^h \frac{\sigma^2}{1-\alpha^2} = \alpha^h \sigma^2_Y
+                \end{split}
+            \end{equation}
         \end{itemize}
 
         Given that all the moments are constant over time (the result on the right do not depend on \(t\)), we can say that the solution is stationary.
