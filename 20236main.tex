@@ -27,7 +27,10 @@
 
         \noindent Data will be posted fully by week 2.
 
-        
+    \section{Graphs}
+
+        Try to incorporate this package: \href{https://www.overleaf.com/learn/latex/Pgfplots_package}{Pgfplots}
+
 
 \part{Descriptive techniques and forecasting algorithms}
 
@@ -572,7 +575,7 @@ plot(AirPassengers)
 
                     \begin{figure}[h]
                         \centering
-                        \begin{tikzpicture}[scale=1.0,>=stealth]\label{fig:L3-1}
+                        \begin{tikzpicture}[scale=1.0,>=stealth]
                             % Axes
                                 \draw[->] (0,0) -- (7,0) node[right]{time};
                                 \draw[->] (0,0) -- (0,5);
@@ -1010,36 +1013,66 @@ plot(AirPassengers)
                 
             \end{mybox}
 
-        \section{Markov chains}
+        \section{Introduction}
 
-                First of all, some notation:
+            In the first lectures of the course, we introduced simple exploratory tools for time series analysis, namely classical time series decomposition, and simple exponential smoothing as a basic example of an algorithm for recursively computing one-step-ahead point forecasts - which, however, does not provide any evaluation of the uncertainty about such forecasts. \\
 
-                \[
-                \underset{Y_t \in \{ 1,\cdots,k \} }{(Y_t)}_{t \geq 1} \sim \mathbb{P} \quad 
-                \]
+            In order to describe the uncertainty about estimates and forecasts, our choice is to use probability, thus regarding a time series as a stochastic process, \((Y_t)_{t \in \mathcal{T}}\) where the index \(t\) refers to time. In classic time series analysis, the index set is discrete, typically \(\mathcal{T}= \{ 0,1,2, \ldots \}\) or \(\mathcal{T}= \{ 1,2,3, \ldots \}\), and a time series is a discrete-time stochastic process. \\
 
-                We also ought to define:  
+            Thus, specifying a statistical model for a time series means to assign the probability law of the stochastic process \((Y_t)\). As seen in the previous lecture, the probability law of a stochastic process is assigned by giving the finite dimensional distributions \(p_n(y_1,\ldots,y_n)\) for all \(n \geq 1\), under certain consistency conditions. \\
 
-                \begin{align}
-                    (\text{i.i.d.}) \Rightarrow &  \mathbb{P} (y_1, \ldots, y_n) = \mathbb{P} (Y_1 = y_1 \cdots Y_n = y_n) = \mathbb{P} (y_1) \cdot \ldots \cdot \mathbb{P} (y_n) = \prod^n_{i=1} p(y_i) \\
-                    (\text{general case}) \Rightarrow & \mathbb{P} (y_1, \ldots, y_n) = \cdots = \mathbb{P} (y_1) \cdot \mathbb{P} (y_2 | y_1) \cdot \ldots \cdot \mathbb{P} (y_n | y_{n-1}) = \prod^n_{i=1} p(y_i | y_{i-1}) \\
-                    (\text{Markov}) \Rightarrow & \mathbb{P} (y_1, \ldots, y_n) 
-                \end{align}
+            Along this course, we present some important classes of stochastic processes, that may serve as statistical models for time series. We start from Markov chains, that we introduce as a basic model for categorical time series and that will be crucial ingredients for more elaborated state space models. Yet, Markov chains are a beautiful chapter of Probability and of wide interest in many fields.
 
-            \begin{definition}[Markov chain]
-                
+\newpage
+        \section{Markov Chains}
+
+            A first - familiar - example of a stochastic process is a sequence \((Y_t)_{t \geq 1}\) of independent random variables (r.v.’s). In the introductory courses of Statistics, you have certainly studied random sampling, where the \( Y_t \) are independent and identically distributed (i.i.d.). For i.i.d. random variables with common distribution \( p \), the finite-dimensional (or joint) distributions are
+
+            \begin{equation}
+                p_n(y_1, \dots, y_n) = p(y_1) p(y_2) \cdots p(y_n) = \prod_{i=1}^{n} p(y_i),
+            \end{equation}
+
+            where \( p_n \) and \( p \) are probability mass functions in the discrete case, or density functions in the continuous case. Let us restrict our attention, to begin with, to the discrete case, where the \( Y_t \) are discrete random variables with values in a finite or countable set \( \mathcal{Y} \); say \( \mathcal{Y} = \{1, 2, \dots\} \) or \( \mathcal{Y} = \{1, 2, \dots\} \).
+
+            The assumption of independence is clearly unsatisfactory in the case of time series, where we want to express a temporal dependence among the \( Y_t \). On the other hand, the general case
+
+            \begin{equation}
+                p_n(y_1, \dots, y_n) = p(y_1) p(y_2 \mid y_1) \cdots p(y_n \mid y_1, \dots, y_{n-1})
+            \end{equation}
+
+            may easily become intractable. The Russian probabilist A.A. Markov (1856–1922) studied the simplest generalization of independence, which consists in permitting that the outcome of an observation at time \( t \) depends on the outcome of the directly preceding observation (and only on it); that is
+
+            \begin{equation}
+                p_n(y_1, \dots, y_n) = p_{0}(y_1) p(y_2 \mid y_1) \cdots p(y_n \mid y_{n-1}),
+            \end{equation}
+
+            where the common marginal probabilities \( p(y_i) \) in (1) are replaced by the conditional probabilities \( p(y_i \mid y_{i-1}) = P(Y_i = y_i \mid Y_{i-1} = y_{i-1}) \). By convention, the process is supposed to start from an initial value \( y_0 \) at time zero. If the initial value is random, we have to complete the description of the probability law of the process by also giving the initial distribution \( p_0(\cdot) \) of \( Y_0 \). Thus we say
+
+            \begin{definition}[State space]
+                A discrete time stochastic process \( (Y_t)_{t \geq 0} \), with \( Y_t \in \mathcal{Y} \), is a Markov process, also called a Markov chain, if \( Y_0 \sim p_0(\cdot) \) and for any \( t \), \( Y_t \) depends on the past observations through \( Y_{t-1} \), and only through it; that is, \( Y_t \) is conditionally independent on \( (Y_0, \dots, Y_{t-2}) \), given \( Y_{t-1} \). The set \( \mathcal{Y} \) of the possible values of \( Y_t \) is called the \textit{state space} of the Markov chain.
             \end{definition}
 
-            From the definition it follows that a finite dimensional distribution can be written as in here (see eq.5)
+            Thus, for a Markov chain, the probability distribution of \( Y_t \) given \( (Y_0 = y_0, \dots, Y_{t-1} = y_{t-1}) \) is
 
-            \noindent To specify the probability law \(\mathbb{P}\) of a Markov chain \((Y_t), \ Y_t \in \{ 1,2, \ldots, k \}\) it is enough to give:
-                \begin{enumerate}[label=\roman*.]
-                    \item \textbf{Initial probabilities}:
-                        \[
-                        p_0 
-                        \]
-                    \item \textbf{Transition probabilities}:
-                \end{enumerate}
+            \begin{equation}
+                p(y_t \mid y_0, y_1, \dots, y_{t-1}) = p(y_t \mid y_{t-1}),
+            \end{equation}
+            
+            for any \( t \geq 1 \).
+            
+            It follows that, in order to \textbf{assign the finite dimensional distributions} for a Markov chain, it is enough to specify
+
+            \begin{itemize}
+                \item The \textit{initial distribution} \( p_0(\cdot) \) of \( Y_0 \)
+                \item textit{The transition probabilities} \( p_{ij}(t) \equiv P(Y_t = j \mid Y_{t-1} = i) \) for all \( i, j \in \mathcal{Y} \) and for all \( t \). The transition probabilities at time \( t \) are collected in the \textit{transition matrix} \( \mathbf{P}_t \).
+
+            \end{itemize}
+
+        \section{Some properties of Markov chains. Ergodic properties.}
+
+            \subsection{Continuos case}
+
+        \section{Inference for Markov chains}
 
     \chapter{Inference for Markov chains}
 
